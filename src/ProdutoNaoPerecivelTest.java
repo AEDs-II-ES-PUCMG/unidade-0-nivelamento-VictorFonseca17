@@ -14,7 +14,7 @@ public class ProdutoNaoPerecivelTest {
     
     @BeforeAll
     static public void prepare(){
-        Locale.setDefault(new Locale("pt", "BR"));
+        Locale.setDefault(Locale.of("pt", "BR"));
         produto = new ProdutoNaoPerecivel("Produto teste", 100, 0.1);
     }
     
