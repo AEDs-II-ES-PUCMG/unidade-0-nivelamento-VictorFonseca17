@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.text.NumberFormat;
 
@@ -17,11 +18,22 @@ public class ProdutoPerecivel extends Produto {
 	 */
 	public ProdutoPerecivel(String desc, double precoCusto, double margemLucro, LocalDate validade) {
 		super(desc, precoCusto, margemLucro);
-		
 		if (validade.isBefore(LocalDate.now())) {
 			throw new IllegalArgumentException("Data de validade não pode ser anterior ao dia atual.");
 		}
-		
+		this.dataDeValidade = validade;
+	}
+
+	/**
+	 * Construtor para carregamento a partir de arquivo (permite data no passado).
+	 * @param desc Descrição do produto
+	 * @param precoCusto Preço de custo
+	 * @param margemLucro Margem de lucro
+	 * @param validade Data de validade (pode ser passada quando carregado de arquivo)
+	 * @param carregadoDeArquivo se true, não valida se a data já passou
+	 */
+	public ProdutoPerecivel(String desc, double precoCusto, double margemLucro, LocalDate validade, boolean carregadoDeArquivo) {
+		super(desc, precoCusto, margemLucro);
 		this.dataDeValidade = validade;
 	}
 	
@@ -52,12 +64,34 @@ public class ProdutoPerecivel extends Produto {
 	}
 	
 	/**
-	 * Descrição, em string, do produto perecível, contendo sua descrição e o valor de venda.
-	 * @return String com o formato: [NOME]: R$ [VALOR DE VENDA]
+	 * Descrição, em string, do produto perecível, contendo sua descrição, data de validade e o valor de venda.
+	 * @return String com o formato: [NOME]: R$ [VALOR DE VENDA] e data de validade
 	 */
 	@Override
 	public String toString() {
 		NumberFormat moeda = NumberFormat.getCurrencyInstance();
-		return String.format("NOME: " + descricao + ": " + moeda.format(valorDeVenda()));
+		double valorExibir;
+		try {
+			valorExibir = valorDeVenda();
+		} catch (IllegalStateException e) {
+			valorExibir = precoCusto * (1.0 + margemLucro);
+		}
+		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String dataStr = dataDeValidade.format(fmt);
+		return String.format("NOME: " + descricao + ": " + moeda.format(valorExibir) + " (validade: " + dataStr + ")");
+	}
+
+	/**
+	 * Gera uma linha de texto a partir dos dados do produto. Preço e margem de lucro são formatados com 2 casas decimais.
+	 * Data de validade vai no formato dd/mm/aaaa
+	 * @return Uma string no formato "2;descrição;preçoCusto;margemLucro;dataDeValidade"
+	 */
+	@Override
+	public String gerarDadosTexto() {
+		String precoFormatado = String.format("%.2f", precoCusto).replace(",", ".");
+		String margemFormatada = String.format("%.2f", margemLucro).replace(",", ".");
+		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String dataStr = dataDeValidade.format(fmt);
+		return String.format("2;%s;%s;%s;%s", descricao, precoFormatado, margemFormatada, dataStr);
 	}
 }
