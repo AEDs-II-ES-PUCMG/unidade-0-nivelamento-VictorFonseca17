@@ -1,16 +1,33 @@
-# Compiled class file
-**/*.class
+# Diretórios de build / compilação (fora de src)
+out/
+build/
+target/
+bin/
+*.class
 
-# Log file
+# IDE e editores
+.idea/
+*.iml
+.vscode/
+.cursor/
+*.code-workspace
+*.sublime-*
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+**/~*
+
+# Logs e temporários
 **/*.log
-
-# BlueJ files
-**/*.ctxt
-
-# Mobile Tools for Java (J2ME)
 **/.mtj.tmp/
+**/*.ctxt
+**/*.dia~
+**/hs_err_pid*
+**/replay_pid*
 
-# Package Files #
+# Pacotes / artefatos (não necessários para rodar com javac)
 **/*.war
 **/*.nar
 **/*.ear
@@ -19,17 +36,5 @@
 **/*.rar
 **/*.jar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-**/hs_err_pid*
-**/replay_pid*
-
-# DIA temporary files
-**/*.dia~
-
-# Office lock
-**/~*
-
-# C and other binaries
+# Binários
 **/*.exe
-
-desktop.ini

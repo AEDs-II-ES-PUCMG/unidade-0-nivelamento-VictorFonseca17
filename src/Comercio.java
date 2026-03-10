@@ -7,28 +7,21 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Comercio {
-    /** Para inclusão de novos produtos no vetor */
     static final int MAX_NOVOS_PRODUTOS = 10;
 
-    /** Nome do arquivo de dados. O arquivo deve estar localizado na raiz do projeto */
     static String nomeArquivoDados;
     
-    /** Scanner para leitura do teclado */
     static Scanner teclado;
 
-    /** Vetor de produtos cadastrados. Sempre terá espaço para 10 novos produtos a cada execução */
     static Produto[] produtosCadastrados;
 
-    /** Quantidade produtos cadastrados atualmente no vetor */
     static int quantosProdutos;
 
-    /** Gera um efeito de pausa na CLI. Espera por um enter para continuar */
     static void pausa(){
         System.out.println("Digite enter para continuar...");
         teclado.nextLine();
     }
 
-    /** Cabeçalho principal da CLI do sistema */
     static void cabecalho(){
         System.out.println("AEDII COMÉRCIO DE COISINHAS");
         System.out.println("===========================");
@@ -75,7 +68,6 @@ public class Comercio {
         }
     }
 
-    /** Lista todos os produtos cadastrados, numerados, um por linha */
     static void listarTodosOsProdutos(){
         cabecalho();
         System.out.println("\nPRODUTOS CADASTRADOS:");

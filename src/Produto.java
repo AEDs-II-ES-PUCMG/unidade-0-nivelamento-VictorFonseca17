@@ -114,7 +114,6 @@ public abstract class Produto {
 			return new ProdutoNaoPerecivel(descricao, precoCusto, margemLucro);
 		}
 		if (tipo == 2 && partes.length >= 5) {
-			// data no formato dd/mm/aaaa (carregamento de arquivo permite data passada)
 			String[] dataPartes = partes[4].split("/");
 			if (dataPartes.length != 3) return null;
 			int dia = Integer.parseInt(dataPartes[0]);
